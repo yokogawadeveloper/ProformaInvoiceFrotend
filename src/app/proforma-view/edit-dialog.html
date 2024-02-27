@@ -1,0 +1,196 @@
+<h2 mat-dialog-title>Edit</h2>
+<mat-dialog-content>
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="label-bg">
+                <label for="division">Division :</label>
+                <select id="division" [(ngModel)]="divisionValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of divisionList" [value]="val.DivisionId" [selected]="val.isSelected">
+                        {{val.DivisionName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="label-bg">
+                <label for="jobcode">Job Code :</label>
+                <input id="jobcode" [(ngModel)]="jobcodeValue">
+            </div>
+
+            <div class="label-bg">
+                <label for="address">Select Address :</label>
+                <select id="address" [(ngModel)]="partyAddress" (change)="onSelectaddress($event)">
+                    <option value="enduseraddress">EndUserAddress</option>
+                    <option value="shiptoparty">ShipToParty</option>
+                    <option value="soldtoparty">SoldToParty</option>
+                    <option value="billtoparty">BillToParty</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="label-bg">
+                <label for="location">Location/Region :</label>
+                <select id="location" [(ngModel)]="regionValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of regionList" [value]="val.RegionId" [selected]="val.isSelected">
+                        {{val.RegionName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="due">Due Date (No of Days) :</label>
+                <select id="due" [(ngModel)]="dueDaysValue" (change)="PIDueDays($event)">
+                    <option *ngFor="let days of duedays" [value]="days">
+                        {{days}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="label-bg">
+                <label for="category">Category :</label>
+                <select id="category" [(ngModel)]="categoryValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of categoryList" [value]="val.CategoryId" [selected]="val.isSelected">
+                        {{val.CategoryName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="wbs">WBS :</label>
+                <input id="wbs" [(ngModel)]="wbsValue">
+            </div>
+        </div>
+
+        
+        <div class="col-md-3">
+            <div class="label-bg">
+                <label for="pm">Project Manager :</label>
+                <select id="pm" [(ngModel)]="pmValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of projectManagerList" [value]="val.PMId" [selected]="val.isSelected">
+                        {{val.EmployeeName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="remarks">Remarks :</label>
+                <input id="remarks" [(ngModel)]="remarksValue">
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div *ngIf="data.type == 'M'">
+        <h2>Material Wise</h2>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="advance">Advance :</label>
+                    <input id="advance" [(ngModel)]="m_advance" (keyup)="materialWise('advance')">
+                </div>
+                <div class="label-bg">
+                    <label for="matreadydate">Mat Ready Date :</label>
+                    <input id="matreadydate" type="date" #myDate [value]="m_mat_ready_date | date:'yyyy-MM-dd'">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="retention">Retention :</label>
+                    <input id="retention" [(ngModel)]="m_retention" (keyup)="materialWise('retention')">
+                </div>
+                <div class="label-bg">
+                    <label for="tcs">TCS Percent:</label>
+                    <input id="tcs" [(ngModel)]="tcspercent" (keyup)="materialWise('tcs')">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="freight">Freight :</label>
+                    <input id="freight" [(ngModel)]="m_freight" (keyup)="materialWise('freight')">
+                </div>
+                <div class="label-bg">
+                    <label for="tcs">TCS:</label>
+                    <input disabled id="tcs" [(ngModel)]="tcsvalue">
+                </div>
+                <div class="label-bg">
+                    <label for="totalamt">Total Amount :</label>
+                    <input disabled id="totalamt" [(ngModel)]="m_totalamt">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="data.type == 'A'">
+        <h2>Advance</h2>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="remarks">Description :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+                <div class="label-bg">
+                    <label for="remarks">% on Amt :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+                <div class="label-bg">
+                    <label for="remarks">ABG/PBG Details :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="remarks">QTY :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+                <div class="label-bg">
+                    <label for="remarks">UOM :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="remarks">Unit Rate :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2"> 
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="remarks">Tax Type :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="remarks">Payment Terms :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="label-bg">
+                    <label for="remarks">GST Base Value :</label>
+                    <input id="remarks" [(ngModel)]="remarksValue">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="data.type == 'R'">
+        <h2>Retention</h2>
+        <div class="row mt-2">
+            
+        </div>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button mat-dialog-close color="accent" (click)="onSubmit()">Submit</button>
+</mat-dialog-actions>

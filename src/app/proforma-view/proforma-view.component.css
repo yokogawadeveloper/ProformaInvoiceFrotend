@@ -1,0 +1,188 @@
+.proforma-view{
+    margin-bottom: 10px;
+}
+
+/* .table-container{
+    max-height: 300px;
+    overflow: auto;
+} */
+
+.radio-btn{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+  }
+
+/* td {
+    text-align: center;
+    border: solid 1px #ccc;
+    border-style: none solid solid none;
+    padding: 5px;
+
+} */
+
+/* . {
+
+  } */
+
+/* .example-container { */
+    /* height: 340px;
+    width: 1194px;
+    overflow: auto; */
+    /* overflow-x: scroll; */
+  /* } */
+
+
+th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+    height:10px;
+}
+
+td.mat-row{
+    min-height:10px;
+    font-size:11px;
+    }
+td.mat-cell{
+    height:10px;
+    font-size:11px; 
+  }
+td.mat-footer-cell{
+    height:10px;
+    font-size:11px; 
+}
+
+
+.check-box{
+    margin-right: 20px;
+    margin-left: 0px;
+    /* margin-left: 25px; */
+}
+
+.label-space{
+    margin-right: 10px;
+}
+
+.item-element{
+    display: flex;
+    margin-top: 10px;
+}
+
+.btm-label{
+    /* background-color: #f4e101;
+    padding: 10px 15px;
+    margin-right: 10px;
+    width: 200px;
+    text-align: center; */
+
+    background-color: #bbbbbb;
+    padding: 3px 0px 0px 0px;
+    margin-right: 10px;
+    width: 200px;
+    text-align: center;
+    height: 20px;
+}
+
+.btm-input{
+    background-color: #cccccc;
+    padding: 0px 2px;
+    /* margin-right: 10px; */
+}
+
+.date-input-size{
+    /* width: 167px;
+    height: 27px; */
+    width: 145px;
+    height: 22px;
+}
+
+.td-bg{
+    background-color: yellow;
+    text-align: center;
+    border: 2px solid #fff;
+}
+
+.td-input-bg{
+    vertical-align : middle;
+    text-align:center;
+}
+
+.table-brdr{
+    border: 1px solid;
+    padding: 0px !important;
+}
+
+.width-inline{
+    display: inline-flex;
+}
+
+
+.textarea-align * {
+    vertical-align: middle;
+}
+
+.label-bg label{
+    background-color: #bbbbbb;
+    padding: 3px;
+    margin-right: 10px;
+    width: 200px;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.label-bg select{
+    width: 50%;
+    height: 23px;
+}
+
+.label-bg input{
+    width: 50%;
+    height: 23px;
+}
+
+.label-bg textarea{
+    width: 50%;
+    height: 55px;
+}
+
+
+::ng-deep .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    width: 100px !important;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+tr.mat-header-row {
+    height: 40px !important;
+}
+
+::ng-deep .mat-card {
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    position: relative;
+    padding: 10px !important;
+    border-radius: 4px;
+}

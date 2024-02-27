@@ -1,0 +1,43 @@
+<div class="container">
+
+    <div class="row icon-item">
+        <div class="col-8 justify-content-left logo-item">
+            <img width="25%" src="../../assets/YokogawaLogo.jpg">
+        </div>
+        <div class="col-4 justify-content-right logo-item">
+            <span class="menu-text">Proforma Invoice Portal</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="menu-item">
+                <li>
+                    <a routerLink="/proforma/FileUpload" routerLinkActive="active-list-item">Proforma File Upload</a>
+                </li>
+                <li>
+                    <a routerLink="/proforma/ProformaList" routerLinkActive="active-list-item">Proforma List</a>
+                </li>
+                <li>
+                    <a routerLink="/proforma/ProformaReport" routerLinkActive="active-list-item">Proforma Report</a>
+                </li>
+                <li *ngIf="suser == 'true'">
+                    <a routerLink="/proforma/DivisionMaster" routerLinkActive="active-list-item">Proforma Division</a>
+                </li>
+                <li *ngIf="suser == 'true'">
+                    <a routerLink="/proforma/CategoryMaster" routerLinkActive="active-list-item">Proforma Category</a>
+                </li>
+                <li *ngIf="suser == 'true'">
+                    <a routerLink="/proforma/RegionMaster" routerLinkActive="active-list-item">Proforma Region</a>
+                </li>
+                <li *ngIf="suser == 'true'">
+                    <a routerLink="/proforma/ProjectManagerMaster" routerLinkActive="active-list-item">Project Manager</a>
+                </li>
+                <li>
+                    <span class="pointer" (click)="logoutuser()">Logout</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

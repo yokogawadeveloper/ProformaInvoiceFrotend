@@ -1,0 +1,424 @@
+<div class="container">
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="division">Division</mat-label>
+                    <mat-select id="division" [(ngModel)]="divisionValue">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let val of divisionList" [value]="val.DivisionId">
+                            {{val.DivisionName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="PINo">PI No.</mat-label>
+                    <input matInput id="PINo" [(ngModel)]="PiNo">
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="PIBased">PI Based On.</mat-label>
+                    <mat-select id="PIBased" [(ngModel)]="PIDate">
+                        <mat-option value="PIDateBased">PI Date</mat-option>
+                        <mat-option value="PIDueDate">PI Due Date</mat-option>
+                        <mat-option value="MaterialDate">Material Readiness Date</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="jobcode">Job Code</mat-label>
+                    <input matInput id="jobcode" [(ngModel)]="job_code">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="location">Location/Region</mat-label>
+                    <mat-select id="location" [(ngModel)]="regionValue">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let val of regionList" [value]="val.RegionId">
+                            {{val.RegionName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="SONo">Sale Order No.</mat-label>
+                    <input matInput id="SONo" [(ngModel)]="SoNo">
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size">PI Date</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="From date" [formControl]="fromDate" (ngModelChange)="datePickerChange()">
+                        <input matEndDate placeholder="To date" [formControl]="toDate" (ngModelChange)="datePickerChange()">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="wbs">WBS</mat-label>
+                    <input matInput id="wbs" [(ngModel)]="wbs_value">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="category">Category</mat-label>
+                    <mat-select id="category" [(ngModel)]="categoryValue">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let val of categoryList" [value]="val.CategoryId">
+                            {{val.CategoryName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="CusId">Customer Name</mat-label>
+                    <input matInput id="CusId" [(ngModel)]="customer_name">
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-form-field>
+                    <mat-label class="label-size" for="location">Project Manager</mat-label>
+                    <mat-select id="location" [(ngModel)]="pmValue">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let val of pmList" [value]="val.PMId">
+                            {{val.EmployeeName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="label-bg">
+                <mat-checkbox class="label-size" (change)="deletedRecords($event)">
+                    Click to see deleted records
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <div class="row button-align mt-5">
+        <button class="col-sm-2 btn btn-secondary mb-3" mat-raised-button (click)="getOrderItems()">Search</button>
+    </div>
+
+    <hr>
+
+
+
+    <div class="col-md-12" *ngIf="proformaTable == true">
+
+        <div>
+            <button class="col-sm-2 btn btn-secondary mb-3 small" color="primary" mat-raised-button (click)="exportToExcel()">Export to excel</button>
+        </div>
+        <!-- <mat-card>
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="slno">
+                        <th mat-header-cell *matHeaderCellDef> Sl no. </th>
+                        <td mat-cell *matCellDef="let element;let i = index"> {{ i + 1 }} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="prepared_by">
+                        <th mat-header-cell *matHeaderCellDef> Prepared By  </th>
+                        <td mat-cell *matCellDef="let element">{{submittedBy}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Type </th>
+                        <td mat-cell *matCellDef="let element">{{element?.order[0].Type}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef> Description </th>
+                        <td mat-cell *matCellDef="let element;let i = index">
+                            <div *ngIf="orderItems.length > 0">
+                                <div style="line-height: 30px;" *ngFor="let items of orderItems[i]">
+                                    <span style="white-space: pre-line">{{items?.Description + ","}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="part_name">
+                        <th mat-header-cell *matHeaderCellDef> Part Name / % on Amt </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="orderItems.length > 0">
+                                <div *ngFor="let items of orderItems[i]">
+                                    <div style="line-height: 30px;" *ngIf="items?.PercentonAmt != null">
+                                        <span style="white-space: pre-line">{{items?.PercentonAmt}}</span>
+                                    </div>
+                                    <div style="line-height: 30px;" *ngIf="items?.PartName != null">
+                                        {{items?.PartName + ","}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hsn">
+                        <th mat-header-cell *matHeaderCellDef> HSN / ABG/PBG Details </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="orderItems.length > 0">
+                                <div *ngFor="let items of orderItems[i]">
+                                    <div style="line-height: 30px;" *ngIf="items?.APBGDetails != null">
+                                        <span style="white-space: pre-line">{{items?.APBGDetails}}</span>
+                                    </div>
+                                    <div style="line-height: 30px;" *ngIf="items?.HSN != null">
+                                        {{items?.HSN + ","}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="qty">
+                        <th mat-header-cell *matHeaderCellDef> Qty </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="orderItems.length > 0">
+                                <div style="line-height: 30px;" *ngFor="let items of orderItems[i]">
+                                    {{items?.PI_Qty + ","}}
+                                </div> 
+                            </div>
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="uom">
+                        <th mat-header-cell *matHeaderCellDef> UOM </th>
+                        <td mat-cell *matCellDef="let element">
+                                {{element?.order[0].UOM}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef> Total </th>
+                        <td mat-cell *matCellDef="let element">{{element?.TotalAmountWithTCS}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="submitted_date">
+                        <th mat-header-cell *matHeaderCellDef> Submitted Date </th>
+                        <td mat-cell *matCellDef="let element">{{element?.SubmittedDate | date:'dd/MM/yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="print">
+                        <th mat-header-cell *matHeaderCellDef> Print </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_without_logo')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>                    
+                    </ng-container>
+
+                    <ng-container matColumnDef="print_logo">
+                        <th mat-header-cell *matHeaderCellDef> Print With Logo </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_with_logo')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card> -->
+
+        <mat-sidenav-container fxFlex="0 1 auto">
+
+            <mat-sidenav #sidenav position="start" mode="side" opened="false" class="width-30 p-6">
+                SIDENAV CONTENT HERE
+            </mat-sidenav>
+    
+            <mat-sidenav-content>
+    
+            <div class=" mat-elevation-z8">
+                <div class="table-container">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="slno" sticky>
+                        <th class="table-column-50" mat-header-cell *matHeaderCellDef> Sl no. </th>
+                        <td class="table-column-50" mat-cell *matCellDef="let element;let i = index"> {{ i + 1 }} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="prepared_by">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Prepared By  </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.submittedBy}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="print">
+                        <th class="table-column-50" mat-header-cell *matHeaderCellDef> Print </th>
+                        <td class="table-column-50" mat-cell *matCellDef="let element; let i = index">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_without_logo')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>                    
+                    </ng-container>
+
+                    <ng-container matColumnDef="print_logo">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Print With Logo </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element; let i = index">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_with_logo')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="mdate">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> Month </th>
+                        <!-- <td class="table-column-150" mat-cell *matCellDef="let element">{{submitDate}}</td> -->
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.mdate}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="division">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Division </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.divisionName}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="bu_head">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> BU Head </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.buHead == null ? '-' : element.buHead}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pm">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Project Manager </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.pmName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="regionName">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.regionName}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="cust_name">
+                        <th class="table-column-250" mat-header-cell *matHeaderCellDef> Customer Name </th>
+                        <td class="table-column-250" mat-cell *matCellDef="let element">{{element.customerName}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cust_code">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Customer code </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.customerCode}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="so_no">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> SO NO/FAK </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.docNo}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PI_CODE">
+                        <th class="table-column-250" mat-header-cell *matHeaderCellDef mat-sort-header> PI No </th>
+                        <td class="table-column-250" mat-cell *matCellDef="let element">{{element?.PI_CODE == null ? '-' : element?.PI_CODE}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subdate">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> PI Date </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.subdate == null ? '-' : element?.subdate }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pi_value">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> PI Value(INR) </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.pi_value_inr == null ? '-' : element?.pi_value_inr}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="balance">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Balance in(INR) </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">0</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pi_value_usd">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> PI Value(USD) </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.pi_value_usd == null ? '-' : element?.pi_value_usd}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pi_value_bdt">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> PI Value(BDT) </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.pi_value_bdt == null ? '-' : element?.pi_value_bdt}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef> Category </th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element.categoryName}}</td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="description">
+                        <th class="table-column-200" mat-header-cell *matHeaderCellDef> Description </th>
+                        <td class="table-column-200" mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="orderItems.length > 0">
+                                <div style="line-height: 30px;" *ngFor="let items of orderItems[i]">
+                                    <span style="white-space: pre-line">{{items?.Description + ","}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="job_code">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef>Job Code</th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.JobCode}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="wbs">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef>WBS</th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.WBS}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="bg_no_dt">
+                        <th class="table-column-250" mat-header-cell *matHeaderCellDef>BG No & Date</th>
+                        <td class="table-column-250" mat-cell *matCellDef="let element">{{element.order[0]?.Type == "A" || "R" ? element.order[0]?.APBGDetails == null ? '-' : element.order[0]?.APBGDetails : '-'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="remarks">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef>Remarks</th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.PI_Remarks}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="payment_terms">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef>Payment Terms</th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">{{element?.PaymentTerms}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mat_ready_date">
+                        <th class="table-column-150" mat-header-cell *matHeaderCellDef>Material Readiness Date</th>
+                        <td class="table-column-150" mat-cell *matCellDef="let element">
+                            <div style="text-align: center;">{{element?.MaterialReadinessDate == null ? '' :  element?.MaterialReadinessDate}}</div>
+                        </td>
+                    </ng-container>
+                    
+                    <div *ngIf="deleteRecords == true">
+                        <ng-container matColumnDef="deleted_remarks">
+                            <th class="table-column-150" mat-header-cell *matHeaderCellDef>Deleted Remarks</th>
+                            <td class="table-column-150" mat-cell *matCellDef="let element">
+                                <div style="text-align: center;">{{element?.deleted_remarks}}</div>
+                            </td>
+                        </ng-container>
+                    </div>
+
+                    <ng-container matColumnDef="empty">
+                        <th class="table-column-100" mat-header-cell *matHeaderCellDef></th>
+                        <td class="table-column-100" mat-cell *matCellDef="let element"></td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{highlighted: row?.DeleteFlag == true}"></tr>
+                </table>
+                </div>
+            </div>
+		</mat-sidenav-content>
+
+	</mat-sidenav-container>
+    </div> 
+
+</div>

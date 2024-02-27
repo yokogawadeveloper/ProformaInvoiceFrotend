@@ -1,0 +1,31 @@
+<div class="container">
+  <hr>
+  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" #myForm="ngForm">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+
+        <div ng-controller="AppController" class="upload">
+          <h4>File Upload</h4>
+          <input type="file" class="custom-file-input" name="prod_line_item" #takeInput
+          (change)="OnFileSelect($event,'prod_line_item')" accept=".csv, text/plain">
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <div ng-controller="AppController" class="upload">
+          <h4>Upload Type</h4>
+          <select>
+            <option>New File</option>
+            <option>Old File</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+      <button type="submit" mat-raised-button class="col-sm-2 btn btn-secondary mb-3">Upload</button>
+    </div>
+  </form>
+</div>
