@@ -1,0 +1,775 @@
+<div class="container">
+
+    <hr>
+
+    <div class="row proforma-view">
+        <div class="col-md-6">
+            <label class="label-space"><b>Sale Order No :</b></label>
+            <span class="item-element">{{dataElement?.DocNo}}</span>
+        </div>
+        <div class="col-md-2">
+            <label class="label-space"><b>Sale Order Date :</b></label>
+            <span class="item-element">{{dataElement?.DocDate | date:'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="col-md-4">
+            <label class="label-space"><b>Sales Office :</b></label>
+            <span class="item-element">{{dataElement?.Sales_Office == null ? '-' : dataElement?.Sales_Office}}</span>
+        </div>
+    </div>
+
+    <div class="row proforma-view mt-2">
+        <div class="col-md-6">
+            <label class="label-space"><b>Supplier :</b></label>
+            <span class="item-element">{{supplierText}}</span>
+        </div>
+        <div class="col-md-2">
+            <label class="label-space"><b>Sold To Code :</b></label>
+            <span class="item-element">{{dataElement?.SoldtoCode}}</span>
+        </div>
+        <div class="col-md-4">
+            <label class="label-space"><b>Sold To Address :</b></label>
+            <span class="item-element">{{soldToAddress}}</span>
+        </div>
+    </div>
+
+
+    <div class="row proforma-view mt-2">
+        <div class="col-md-6">
+            <label class="label-space"><b>Customer PO No :</b></label>
+            <span class="item-element">{{dataElement?.PONo}}</span>
+        </div>
+        <div class="col-md-2">
+            <label class="label-space"><b>PO Date :</b></label>
+            <span class="item-element">{{dataElement?.PoDate | date:'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="col-md-4">
+            <label class="label-space"><b>FAK No :</b></label>
+            <span class="item-element">{{dataElement?.IndentNo}}</span>
+        </div>
+    </div>
+
+
+    <div class="row proforma-view mt-2">
+        <div class="col-md-6">
+            <label class="label-space"><b>Total Value :</b></label>
+            <span class="item-element">{{dataElement?.TotalItemvalue == null ? '-' : dataElement?.TotalItemvalue}}</span>
+        </div>
+        <div class="col-md-2">
+            <label class="label-space"><b>SubmittedBy :</b></label>
+            <span class="item-element">{{submittedBy == null ? '-' : submittedBy}}</span>
+        </div>
+        <div class="col-md-4">
+            <label class="label-space"><b>Submitted Date :</b></label>
+            <span class="item-element">{{dataElement?.SubmittedDate == null ? '-' : dataElement?.SubmittedDate | date:'dd/MM/yyyy'}}</span>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row" #target>
+        <div class="col-md-6 justify-content-center">
+            <div class="label-bg">
+                <label for="division">Division : <span style="color: #bf3333; font-size: 20px;">*</span></label>
+                <select id="division" [(ngModel)]="divisionValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of divisionList" [value]="val.DivisionId" [selected]="val.isSelected">
+                        {{val.DivisionName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="category">Category : <span style="color: #bf3333; font-size: 20px;">*</span></label>
+                <select id="category" [(ngModel)]="categoryValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of categoryList" [value]="val.CategoryId" [selected]="val.isSelected">
+                        {{val.CategoryName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="jobcode">Job Code : <span style="color: #bf3333; font-size: 20px;">*</span></label>
+                <input id="jobcode" [(ngModel)]="jobcodeValue">
+            </div>
+            <div class="label-bg">
+                <label for="due">Due Date (No of Days) :</label>
+                <select id="due" [(ngModel)]="dueDaysValue" (change)="PIDueDays($event)">
+                    <option *ngFor="let days of duedays" [value]="days">
+                        {{days}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="address">Select Address : <span style="color: #bf3333; font-size: 20px;">*</span></label>
+                <select id="address" [(ngModel)]="partyAddress" (change)="onSelectaddress($event)">
+                    <option value="enduseraddress">EndUserAddress</option>
+                    <option value="shiptoparty">ShipToParty</option>
+                    <option value="soldtoparty" selected>SoldToParty</option>
+                    <option value="billtoparty">BillToParty</option>
+                </select>
+            </div>
+            <!-- <div class="label-bg">
+                <label for="bankacc">Bank Account No :</label>
+                <input id="bankacc" [(ngModel)]="bankAcc">
+            </div>
+
+            <div class="label-bg">
+                <label for="bank_ifsc">Bank IFSC :</label>
+                <input id="bank_ifsc" [(ngModel)]="bankIFSC">
+            </div> -->
+        </div>
+        <div class="col-md-6 justify-content-center">
+            <div class="label-bg">
+                <label for="location">Location/Region : <span style="color: #bf3333; font-size: 20px;">*</span></label>
+                <select id="location" [(ngModel)]="regionValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of regionList" [value]="val.RegionId" [selected]="val.isSelected">
+                        {{val.RegionName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="pm">Project Manager : <span style="color: #bf3333; font-size: 20px;">*</span></label>
+                <select id="pm" [(ngModel)]="pmValue">
+                    <option value="">Select</option>
+                    <option *ngFor="let val of projectManagerList" [value]="val.PMId" [selected]="val.isSelected">
+                        {{val.EmployeeName}}
+                    </option>
+                </select>
+            </div>
+            <div class="label-bg">
+                <label for="wbs">WBS :</label>
+                <input id="wbs" [(ngModel)]="wbsValue">
+            </div>
+            <div class="label-bg">
+                <label for="remarks">Remarks :</label>
+                <input id="remarks" [(ngModel)]="remarksValue">
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label class="pointer"><input class="radio-btn" type="radio" name="optradio" [(ngModel)]="flagType" [value]="0" (click)="onSelectchange('material')">Material Wise</label>
+        </div>
+        <div class="col-md-4">
+            <label class="pointer"><input class="radio-btn" type="radio" name="optradio" [(ngModel)]="flagType" [value]="1" (click)="onSelectchange('advance')">Advance</label>
+        </div>
+        <div class="col-md-4">
+            <label class="pointer"><input class="radio-btn" type="radio" name="optradio" [(ngModel)]="flagType" [value]="2" (click)="onSelectchange('retention')">Retention</label>
+        </div>
+    </div>
+
+    <hr>
+
+
+    <div class="col-md-12 table-container" *ngIf="selectview == 'material'">
+        <mat-card>
+            <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                          <mat-checkbox (change)="$event ? masterToggle() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [disabled] = "orderRowDisable"
+                                        class="check-box">
+                          </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="piQTYShow(row, $event, i)"
+                                        [checked]="selection.isSelected(row)"
+                                        [disabled]="row.excluded">
+                          </mat-checkbox>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                      </ng-container>
+
+                    <ng-container matColumnDef="slno" sticky>
+                        <th mat-header-cell *matHeaderCellDef> Sl no. </th>
+                        <td mat-cell *matCellDef="let element;let i = index"> 
+                            <span>{{i + 1}}</span>
+                            <!-- <span *ngIf="element.ItemNo != null">{{i + 1}}</span> -->
+                            <!-- <span *ngIf="element.ItemNo == null"></span>  -->
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="item_no">
+                        <th mat-header-cell *matHeaderCellDef> Item No  </th>
+                        <td mat-cell *matCellDef="let element"> {{element.ItemNo == null ? '' : element.ItemNo}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="material_desc">
+                        <th mat-header-cell *matHeaderCellDef> Part Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.PartName == null ? '' : element.PartName}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="part_name">
+                        <th mat-header-cell *matHeaderCellDef> Material Desc </th>
+                        <td mat-cell *matCellDef="let element"> {{element.MaterialDesc == null ? '' : element.MaterialDesc}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="qty">
+                        <th mat-header-cell *matHeaderCellDef> Qty </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Qtymodels == null ? '' : element.Qtymodels}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="uom">
+                        <th mat-header-cell *matHeaderCellDef> UOM </th>
+                        <td mat-cell *matCellDef="let element"> {{element.UOM == null ? '' : element.UOM}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="unit_price">
+                        <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+                        <td mat-cell *matCellDef="let element"> {{element.UnitPrice == null ? '' : element.UnitPrice}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('unit_price') == null ? '0.00' : calculate('unit_price') | number: '1.2-2'}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="total_price">
+                        <th mat-header-cell *matHeaderCellDef> Total Price </th>
+                        <td mat-cell *matCellDef="let element"> {{element.TotalPrice == null ? '' : element.TotalPrice}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('total_price') == null ? '0.00' : calculate('total_price') | number: '1.2-2'}}</td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="pi_qty">
+                        <th mat-header-cell *matHeaderCellDef><span *ngIf="this.selection.selected.length != 0">PI Qty</span></th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element?.check == true">
+                                <mat-form-field>
+                                    <input type="number" matInput [(ngModel)]="piQTY[i]" (keyup)="basedonPIQty(i)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" >
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="element?.check == true">
+                                {{piQTYTotal[i] == null ? element.TotalPrice : piQTYTotal[i]}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                      </ng-container>
+
+
+                    <ng-container matColumnDef="discount_val">
+                        <th mat-header-cell *matHeaderCellDef>Discount (-)</th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.DiscountPercent == null"> 
+                                {{element.DiscountPercent == null ? '' : element.DiscountPercent}}
+                            </div>
+                            <div *ngIf="element.DiscountPercent != null"> 
+                                {{element.DiscountPercent == null ? '' : element.DiscountPercent}} %
+                            </div>
+                            <div>
+                                {{discountTotal[i] == null ? '' : discountTotal[i]}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element"></td>
+                      </ng-container>
+
+                    <ng-container matColumnDef="p_f">
+                        <th mat-header-cell *matHeaderCellDef> PF(+) </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.PFpercent == null"> 
+                                {{element.PFpercent == null ? '' : element.PFpercent}}
+                            </div>
+                            <div *ngIf="element.PFpercent != null"> 
+                                {{element.PFpercent == null ? '' : element.PFpercent}} %
+                            </div>
+                            <div>
+                                {{pfTotalAmount[i] == null ? '' : pfTotalAmount[i]}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('pf_amt') == null ? '0.00' : calculate('pf_amt') | number: '1.2-2'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="freight_amt">
+                        <th mat-header-cell *matHeaderCellDef> Freight(+) </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.FreightPercent == null"> 
+                                {{element.FreightPercent == null ? '' : element.FreightPercent}}
+                            </div>
+                            <div *ngIf="element.FreightPercent != null"> 
+                                {{element.FreightPercent == null ? '' : element.FreightPercent}} %
+                            </div>
+                            <div>
+                                {{freightTotalAmount[i] == null ? '' : freightTotalAmount[i]}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('freight_amt') == null ? '0.00' : calculate('freight_amt') | number: '1.2-2'}}</td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="sgst_amt">
+                        <th mat-header-cell *matHeaderCellDef> SGST </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.SGSTpercent == null">
+                                {{element.SGSTpercent == null ? '' : element.SGSTpercent}}
+                            </div>
+                            <div *ngIf="element.SGSTpercent != null">
+                                {{element.SGSTpercent == null ? '' : element.SGSTpercent}} %
+                            </div>
+                            <div>
+                                {{sgstTotalAmount[i] == null ? '' : sgstTotalAmount[i]}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('sgst_amt') == null ? '0.00' : calculate('sgst_amt') | number: '1.2-2'}}</td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="cgst">
+                        <th mat-header-cell *matHeaderCellDef> CGST </th>
+                        <td mat-cell *matCellDef="let element; let i = index"> 
+                            <div *ngIf="element.CGSTPercent == null">
+                                {{element.CGSTPercent == null ? '' : element.CGSTPercent}}
+                            </div>
+                            <div *ngIf="element.CGSTPercent != null">
+                                {{element.CGSTPercent == null ? '' : element.CGSTPercent}} %
+                            </div>
+                            <div>
+                                {{cgstTotalAmount[i] == null ? '' : cgstTotalAmount[i]}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('cgst_amt') == null ? '0.00' : calculate('cgst_amt') | number: '1.2-2'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="igst_Amt">
+                        <th mat-header-cell *matHeaderCellDef> IGST </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.IGSTPercent == null">
+                                {{element.IGSTPercent == null ? '' : element.IGSTPercent}}
+                            </div>
+                            <div *ngIf="element.IGSTPercent != null">
+                                {{element.IGSTPercent == null ? '' : element.IGSTPercent}} %
+                            </div>
+                            <div>
+                                {{igstTotalAmount[i] == null ? '' : igstTotalAmount[i]}}
+                            </div>  
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{calculate('igst_amt') == null ? '0.00' : calculate('igst_amt') | number: '1.2-2'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total_Amt">
+                        <th mat-header-cell *matHeaderCellDef> Total Amt </th>
+                        <td mat-cell *matCellDef="let element; let i = index"> {{totalValueWithGST[i] == null ? '' : totalValueWithGST[i]}} </td>
+                        <td mat-footer-cell *matFooterCellDef="let element">{{totalAmount == null ? '0.00' : totalAmount | number: '1.2-2'}}</td>                    
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    [ngStyle]="row.excluded && {'background-color': 'lightgrey'}"
+                    ></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+                </table>
+            </div>
+        </mat-card>
+    </div>
+
+
+    <div class="row" *ngIf="selectview == 'advance'">
+        <div class="col-md-12 table-brdr">
+            <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <td scope="col" class="td-bg">ADV/RETN</td>
+                    <td scope="col" class="td-bg">Item/Model</td>
+                    <td scope="col" class="td-bg">Qty</td>
+                    <td scope="col" class="td-bg">UOM</td>
+                    <td scope="col" class="td-bg">Unit Rate(RS)</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td rowspan="3" class="td-input-bg">
+                        <input disabled type="checkbox" id="advance" name="advance" checked>
+                        <label for="advance">Advance</label>
+                    </td>
+                    <td class="td-input-bg">
+                        <textarea [(ngModel)]="inputDescription" placeholder="Description"></textarea>
+                    </td>
+                    <td rowspan="3" class="td-input-bg">
+                        <select [(ngModel)]="selectQTY" (change)="onCalculation()">
+                            <option *ngFor="let quantity of quantities" [value]="quantity">
+                                {{quantity}}
+                            </option>
+                        </select>
+                    </td>
+                    <td rowspan="3" class="td-input-bg">
+                        <input [(ngModel)]="inputUOM" placeholder="">
+                    </td>
+                    <td rowspan="3" class="td-input-bg">
+                        <input [(ngModel)]="inputUnitPrice" (keyup)="onCalculation()" placeholder="">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="td-input-bg">
+                        <textarea [(ngModel)]="percentOnAmt" placeholder="% on Amt"></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="td-input-bg">
+                        <textarea [(ngModel)]="apbgDetails" placeholder="ABG/PBG Details"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="selectview == 'retention'">
+        <div class="col-md-12 table-brdr">
+            <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <td scope="col" class="td-bg">ADV/RETN</td>
+                    <td scope="col" class="td-bg">Item/Model</td>
+                    <td scope="col" class="td-bg">Qty</td>
+                    <td scope="col" class="td-bg">UOM</td>
+                    <td scope="col" class="td-bg">Unit Rate(RS)</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td rowspan="3" class="td-input-bg">
+                        <input disabled type="checkbox" id="retention" name="retention" checked>
+                        <label for="retention">Retention</label>
+                    <br>
+                    </td>
+                    <td class="td-input-bg">
+                        <textarea [(ngModel)]="inputDescription" placeholder="Description"></textarea>
+                    </td>
+                    <td rowspan="3" class="td-input-bg">
+                        <select [(ngModel)]="selectQTY" (change)="onCalculation()">
+                            <option *ngFor="let quantity of quantities" [value]="quantity">
+                                {{quantity}}
+                            </option>
+                        </select>
+                    </td>
+                    <td rowspan="3" class="td-input-bg">
+                        <input [(ngModel)]="inputUOM" placeholder="">
+                    </td>
+                    <td rowspan="3" class="td-input-bg">
+                        <input [(ngModel)]="inputUnitPrice" (keyup)="onCalculation()" placeholder="">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="td-input-bg">
+                        <textarea [(ngModel)]="percentOnAmt" placeholder="% on Amt"></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="td-input-bg">
+                        <textarea [(ngModel)]="apbgDetails" placeholder="ABG/PBG Details"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-3" style="text-align: right;">
+            <div class="mb-2" *ngIf="selectview == 'advance'" style="margin-right: 102px;">
+                <label>Tax Type :</label>
+                <select [(ngModel)]="seletedGST" (change)="advanceTabGST($event)">
+                    <option>NA</option>
+                    <option value="igst">IGST</option>
+                    <option value="gst">SGST</option>
+                </select>
+            </div>
+            <div class="textarea-align" *ngIf="selectview == 'advance' || selectview == 'retention'">
+                <label for="textarea">Payment Terms :</label>
+                <span><textarea id="textarea" [(ngModel)]="paymentTerms"></textarea></span>
+            </div>
+        </div>
+        <div class="col-md-3" style="text-align: right;" *ngIf="selectview == 'advance'">
+            <div class="mb-2" *ngIf="advanceGSTInput == 'gst'">
+                <label>SGST :</label>
+                <input type="number" [(ngModel)]="advanceSGST" (keyup)="basedOnGSTBaseValue()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">%
+            </div>
+            <div class="mb-2" *ngIf="advanceGSTInput == 'gst'">
+                <label>CGST :</label>
+                <input type="number" [(ngModel)]="advanceCGST" (keyup)="basedOnGSTBaseValue()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">%
+            </div>
+            <div class="mb-2" *ngIf="advanceGSTInput == 'igst'">
+                <label>IGST :</label>
+                <input type="number" [(ngModel)]="advanceIGST" (keyup)="basedOnGSTBaseValue()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">%
+            </div>
+        </div>
+        <div class="col-md-6" style="text-align: right; margin-inline-start: auto;">
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">Advance :</div>
+                    <span class="btm-input"><input [disabled]="isEnable" [(ngModel)]="advance" (keyup)="lineItemValues('advance', $event)" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">Retention  :</div>
+                    <span class="btm-input"><input [disabled]="isEnable" [(ngModel)]="retention" (keyup)="lineItemValues('retention', $event)" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline ">
+                    <div class="btm-label">Material Readiness Date :</div>
+                    <span class="btm-input">
+                        <input [disabled]="isEnable" class="date-input-size" [(ngModel)]="materialDate" (change)="lineItemValues('materialDate', $event)"  type="date" #myDate [value]="materialDate | date:'yyyy-MM-dd'" placeholder="dd-mm-yyyy">
+                    </span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">Freight :</div>
+                    <span class="btm-input"><input [disabled]="isEnable" [(ngModel)]="freight" (keyup)="lineItemValues('freight', $event)" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">GST Base Value :</div>
+                    <span class="btm-input"><input [disabled]="isDisable" [(ngModel)]="gstBaseVal" (keyup)="basedOnGSTBaseValue()" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">GST Value :</div>
+                    <span class="btm-input"><input disabled [(ngModel)]="gstVal" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline" style="margin-right: 96px;">
+                    <div class="btm-label">TCS applicable :</div>
+                    <span class="btm-input">
+                        Enable<input type="checkbox" [(ngModel)]="click" (change)="onClick($event);"/>
+                        <!-- No<input type="radio" [(ngModel)]="radioNo" (click)="onClick('false');" name="radiobtn" /> -->
+                    </span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label" *ngIf="click == true">TCS % :</div>
+                    <span class="btm-input" *ngIf="click == true"><input [(ngModel)]="tcsPercent" (keyup)="onKeyupTCSPercent()" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">TCS Value :</div>
+                    <span class="btm-input"><input disabled [(ngModel)]="tcsValue" placeholder=""></span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="width-inline">
+                    <div class="btm-label">Total Value :</div>
+                    <span class="btm-input"><input disabled [(ngModel)]="totalValue" placeholder=""></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="submitBtn == 'material' || submitBtn == 'advance' || submitBtn == 'retention'">
+        <button *ngIf="btnType != 'edit'" class="col-sm-3 btn btn-secondary mb-3" mat-raised-button (click)="onSubmit_orderAck()">Submit</button>
+        <button *ngIf="btnType == 'edit'" class="col-sm-3 btn btn-secondary mb-3" mat-raised-button (click)="onupdate_orderAck()">EDIT</button>
+    </div>
+
+    <hr>
+
+    <h4>Order Acknowledgement History</h4>
+
+    <div class="col-md-12 table-container">
+        <mat-card>
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource1">
+
+                    <ng-container matColumnDef="slno">
+                        <th mat-header-cell *matHeaderCellDef> 
+                            <div>Sl no.</div> 
+                        </th>
+                        <td mat-cell *matCellDef="let element;let i = index" style="vertical-align: top;padding-top: 8px;"> 
+                            {{ i + 1 }} 
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="prepared_by">
+                        <th mat-header-cell *matHeaderCellDef> 
+                            <div>Prepared By</div>   
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="vertical-align: top;padding-top: 8px;">
+                            {{submittedBy}}
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <span>Type</span>   
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="vertical-align: top;padding-top: 8px;">
+                            {{element?.order[0].Type}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Description</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div style="line-height: 30px;" *ngFor="let items of orderItems[i]">
+                                <span style="white-space: pre-line">{{items?.Description + ","}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="part_name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Part Name / % on Amt</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngFor="let items of orderItems[i]">
+                                <div style="line-height: 30px;" *ngIf="items?.PercentonAmt != null">
+                                    <span style="white-space: pre-line">{{items?.PercentonAmt}}</span>
+                                </div>
+                                <div style="line-height: 30px;" *ngIf="items?.PartName != null">
+                                    {{items?.PartName + ","}}
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hsn">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>HSN / ABG/PBG Details</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+
+                            <div *ngFor="let items of orderItems[i]">
+                                <div style="line-height: 30px;" *ngIf="items?.APBGDetails != null">
+                                    <span style="white-space: pre-line">{{items?.APBGDetails}}</span>
+                                </div>
+                                <div style="line-height: 30px;" *ngIf="items?.HSN != null">
+                                    {{items?.HSN + ","}}
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="qty">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Qty</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <div style="line-height: 30px;" *ngFor="let items of orderItems[i]">
+                                {{items?.PI_Qty + ","}}
+                            </div> 
+                        </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="uom">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>UOM</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="vertical-align: top;padding-top: 8px;">
+                            <!-- <div style="line-height: 30px;" *ngFor="let items of orderItems"> -->
+                                {{element?.order[0].UOM}}
+                            <!-- </div>  -->
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Total</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="vertical-align: top;padding-top: 8px;">{{element?.TotalAmountWithTCS}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="submitted_date">
+                        <th mat-header-cell *matHeaderCellDef>                            
+                            <div>Submitted Date</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="vertical-align: top;padding-top: 8px;">{{element?.SubmittedDate | date:'dd/MM/yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="print">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Print</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_without_logo')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="print_logo">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Print With Logo</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_with_logo')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <!-- by gautam 27 Feb 2024 -->
+                    <ng-container matColumnDef="print_sbi_bank">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Print By SBI Bank</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_sbi_bank')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <!-- by gautam 27 Feb 2024 -->
+
+                    <ng-container matColumnDef="print_oaitem">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>OA Details</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+                            <button mat-icon-button (click)="generatePDF(element, i, 'print_aoitem')" style="cursor: pointer;">
+                                <mat-icon class="mat-18">print</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Edit</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+                            <button mat-icon-button (click)="updateOrderAck(element, target)" style="cursor: pointer;">
+                                <mat-icon class="mat-18">edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="delete">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div>Delete</div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="vertical-align: top;padding-top: 0px;">
+                            <button mat-icon-button (click)="delete_OrderAcknowledgement_history(element.OrderAckId, i)" style="cursor: pointer;">
+                                <mat-icon class="mat-18">delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+            </div>
+        </mat-card>
+    </div> 
+
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="div-name">
+                <mat-form-field>
+                    <input matInput placeholder="Division Name" [(ngModel)]="divisionName">
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" (click)="divisionMaster()">Save</button>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="bu-head">
+                <mat-form-field>
+                    <input matInput placeholder="BU Head" [(ngModel)]="buHead">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="cate-name">
+                <mat-form-field>
+                    <input matInput placeholder="Category Name" [(ngModel)]="categoryName">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="categoryMaster()">Save</button>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="region-name">
+                <mat-form-field>
+                    <input matInput placeholder="Region Name" [(ngModel)]="regionName">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="regionMaster()">Save</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="emp-no">
+                <mat-form-field>
+                    <input matInput placeholder="Employee No" [(ngModel)]="employeeNo">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="employeeMaster()">Save</button>
+        </div>
+        <div class="col-md-9">
+            <div class="emp-name">
+                <mat-form-field>
+                    <input matInput placeholder="Employee Name" [(ngModel)]="employeeName">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+</div>

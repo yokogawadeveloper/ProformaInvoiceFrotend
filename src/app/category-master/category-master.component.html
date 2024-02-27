@@ -1,0 +1,59 @@
+<div class="container">
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="cate-name">
+                <mat-form-field>
+                    <input matInput placeholder="Category Name" [(ngModel)]="categoryName">
+                </mat-form-field>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" (click)="categoryMaster()">Save</button>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+
+    <hr>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <!-- <mat-card> -->
+                <div class="">
+                    <table class="tab-flex" mat-table [dataSource]="dataSource">
+            
+                        <ng-container matColumnDef="slno">
+                            <th mat-header-cell *matHeaderCellDef> Sl no. </th>
+                            <td mat-cell *matCellDef="let element;let i = index"> {{ i + 1 }} </td>
+                        </ng-container>
+            
+                        <!-- <ng-container matColumnDef="category_id">
+                            <th mat-header-cell *matHeaderCellDef> Category ID  </th>
+                            <td mat-cell *matCellDef="let element"> {{element.CategoryId}} </td>
+                        </ng-container> -->
+            
+                        <ng-container matColumnDef="category_name">
+                            <th mat-header-cell *matHeaderCellDef> Category Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.CategoryName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="delete">
+                            <th mat-header-cell *matHeaderCellDef> Delete </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <button mat-icon-button color="accent" (click)="deleteCategory(element?.CategoryId)">
+                                    <mat-icon class="mat-18">delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                       
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                </div>
+            <!-- </mat-card> -->
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="region-name">
+                <mat-form-field>
+                    <input matInput placeholder="Region Name" [(ngModel)]="regionName">
+                </mat-form-field>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" (click)="regionMaster()">Save</button>
+        </div>
+        <div class="col-md-9">
+            <div class="region-abbr">
+                <mat-form-field>
+                    <input matInput placeholder="Abbr" style="text-transform:uppercase" minlength="3" maxlength="3" [(ngModel)]="regionAbbr">
+                </mat-form-field>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <hr>
+
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <!-- <mat-card> -->
+                <div class="">
+                    <table class="tab-flex" mat-table [dataSource]="dataSource">
+            
+                        <ng-container matColumnDef="slno">
+                            <th mat-header-cell *matHeaderCellDef> Sl no. </th>
+                            <td mat-cell *matCellDef="let element;let i = index"> {{ i + 1 }} </td>
+                        </ng-container>
+            
+                        <!-- <ng-container matColumnDef="region_id">
+                            <th mat-header-cell *matHeaderCellDef> Region ID  </th>
+                            <td mat-cell *matCellDef="let element"> {{element.RegionId}} </td>
+                        </ng-container> -->
+            
+                        <ng-container matColumnDef="region_name">
+                            <th mat-header-cell *matHeaderCellDef> Region Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.RegionName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="abbr">
+                            <th mat-header-cell *matHeaderCellDef> Abbrevation </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Abbr}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="delete">
+                            <th mat-header-cell *matHeaderCellDef> Delete </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <button mat-icon-button color="accent" (click)="deleteRegion(element?.RegionId)">
+                                    <mat-icon class="mat-18">delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                       
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                </div>
+            <!-- </mat-card> -->
+        </div>
+    </div>
+
+</div>

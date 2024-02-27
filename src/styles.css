@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~ngx-toastr/toastr';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.pointer{
+    cursor: pointer;
+}
+
+.logo-item{
+    background-color:#0100BD; 
+    padding: 20px;
+}
+
+.icon-item{
+    padding: 10px;
+}
+
+.menu-item{
+    padding-top: 20px;
+    list-style: none;
+    padding-inline-start: 0px;
+    margin-bottom: 0px;
+}  
+
+.menu-item li{
+    display: inline-block;
+    margin-right: 20px;
+
+}
+
+.menu-item li a{
+    text-decoration: none;
+    color: #212529;
+}
+
+.menu-text{
+    color: white;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    margin-left: 100px;
+}
+
+.active-list-item {
+    color: #3F51B5 !important;
+    background-color: #efefef;
+    padding: 10px 15px;
+  }
+
+
+@media (min-width: 1200px){
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1300px !important;
+    }
+}
+
+.mat-body, .mat-body-1, .mat-typography {
+    font: 400 12px/14px Roboto, "Helvetica Neue", sans-serif !important;
+    letter-spacing: normal;
+}
